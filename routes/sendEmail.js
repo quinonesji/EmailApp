@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const sgMail = require('@sendgrid/mail');
 
+const request = require('request');
+
 var jade = require('jade');
 
 //env config variables
