@@ -47,7 +47,7 @@ router.post('/', function(req, res, next) {
                 }
                 let result = {"resultCode": 0, "responseDesc": "Email has successfully sent. Thank you for your business."};
                 res.json(result);
-                console.log(json);
+                //console.log(json);
             });
         }
         else {
@@ -67,7 +67,7 @@ router.post('/', function(req, res, next) {
                 }
                 let result = {"resultCode": 0, "responseDesc": "Email has successfully sent. Thank you for your business."};
                 res.json(result);
-                console.log(json);
+                //console.log(json);
             });
         }
     }
