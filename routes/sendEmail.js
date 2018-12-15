@@ -43,7 +43,7 @@ router.post('/', function(req, res, next) {
         if(req.body.designform  === "designform") {
             //req is coming from resources page
             //var resObj = SendEmail(myObj, "/views/designIndex.pug");
-            var data = jade.renderFile(process.cmd() + '/views/design.jade', myObj)
+            var data = jade.renderFile(process.cwd() + '/views/design.jade', myObj)
             const msg = {
                 to: 'joseiq91@gmail.com',
                 from: 'noReply@rileyandco.com',
@@ -63,7 +63,7 @@ router.post('/', function(req, res, next) {
         else {
             //req coming from contact page
             //var resObj = SendEmail(myObj, "/views/index.pug");
-            var data = jade.renderFile(process.cmd() + '/views/customer.jade', myObj)
+            var data = jade.renderFile(process.cwd() + '/views/customer.jade', myObj)
             const msg = {
                 to: 'joseiq91@gmail.com',
                 from: 'noReply@rileyandco.com',
