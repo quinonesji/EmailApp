@@ -1,0 +1,30 @@
+table(style='width:100%', border='1')
+  tr
+    th First Name
+    th Last Name
+    th Email
+    th Phone
+    th Company
+    th Country
+    th City
+    th State
+    th Have you worked with us Before?
+    th What best describes you?
+    th If Other, please specify
+    th Tell us about your needs
+  tr
+    td #{fname}
+    td #{lname}
+    td #{Email}
+    td #{phone}
+    td #{company}
+    td #{country}
+    td #{city}
+    td #{state}
+    td #{worked}
+    td
+        ul
+            each val in desc
+                li=val
+    td #{other}
+    td #{needs}
