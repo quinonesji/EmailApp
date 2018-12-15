@@ -41,7 +41,7 @@ router.post('/', function(req, res, next) {
     } else {
         // Object is NOT empty
         console.log(req.body.designapplication);
-        if(req.body.designapplication === "designform") {
+        if(req.body['designapplication'] === "designform") {
             //req is coming from resources page
             //var resObj = SendEmail(myObj, "/views/designIndex.pug");
             var data = jade.renderFile(process.cwd() + '/views/design.jade', myObj)
