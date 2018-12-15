@@ -96,6 +96,7 @@ verifyGoogleRecaptcha = (response, rip) => {
 
     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + recaptchaSecretKey + "&response=" + response + "&remoteip=" + rip;//+ "&remoteip=" + rip
   console.log(verificationUrl);
+  console.log("secret Key: ", recaptchaSecretKey);
     // Hitting GET request to the URL, Google will respond with success or error scenario.
   request(verificationUrl,function(error,response,body) {
       body = JSON.parse(body);
