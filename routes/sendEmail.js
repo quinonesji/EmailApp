@@ -16,6 +16,14 @@ router.get('/', function(req, res, next) {
   res.send('sending some response back!');
 });
 
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
 router.post('/', function(req, res, next) {
     var myObj = req.body; // set request body coming from client
     var grecaptchaStatus = verifyGoogleRecaptcha(req.body['g-recaptcha-response'], req.connection.remoteAddress);
