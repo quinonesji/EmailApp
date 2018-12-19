@@ -46,7 +46,7 @@ router.post('/', function(req, res, next) {
             //var resObj = SendEmail(myObj, "/views/designIndex.pug");
             var data = jade.renderFile(process.cwd() + '/views/design.jade', myObj)
             const msg = {
-                to: 'l.riley@rileyandco.com;d.burns@rileyandco.com;g.velez@rileyandco.com',
+                to: ['l.riley@rileyandco.com', 'd.burns@rileyandco.com', 'g.velez@rileyandco.com'],
                 from: 'noReply@rileyandco.com',
                 bcc: 'joseiq91@gmail.com',
                 subject: 'Lift Station Design Form',
@@ -66,7 +66,7 @@ router.post('/', function(req, res, next) {
             //var resObj = SendEmail(myObj, "/views/index.pug");
             var data = jade.renderFile(process.cwd() + '/views/customer.jade', myObj)
             const msg = {
-                to: 'l.riley@rileyandco.com;d.burns@rileyandco.com;g.velez@rileyandco.com',
+                to: ['l.riley@rileyandco.com', 'd.burns@rileyandco.com', 'g.velez@rileyandco.com'],
                 from: 'noReply@rileyandco.com',
                 bcc: 'joseiq91@gmail.com',
                 subject: 'Customer Form',
