@@ -1,15 +1,38 @@
 var express = require('express');
 var router = express.Router();
+
+const Promise = require("bluebird");
 const sgMail = require('@sendgrid/mail');
 
 const request = require('request');
 
 var jade = require('jade');
 
+const sendEmail = params => {
+    return new Promise((resolve, reject) => {
+      sgMail.send(params, (err, json) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(json);
+        }
+      });
+    });
+  };
+
+
 //env config variables
 const recaptchaSecretKey = process.env.RECAPTCHA_SECRET || '';
 const apiKey = process.env.SENDGRID_API_KEY || '';
 sgMail.setApiKey(apiKey);
+
+var msg = {
+    to: ["joseiq91@gmail.com"],
+    from: "noReply@rileyandco.com",
+    subject: "Test upload an attachment form",
+    attachments: [{ content: "", filename: "" }],
+    html: ""
+  };
 
 /* GET email listing. */
 router.get('/', function(req, res, next) {
@@ -44,42 +67,69 @@ router.post('/', function(req, res, next) {
         if(req.body['designapplication'] === "designform") {
             //req is coming from resources page
             //var resObj = SendEmail(myObj, "/views/designIndex.pug");
-            var data = jade.renderFile(process.cwd() + '/views/design.jade', myObj)
-            const msg = {
-                to: ['l.riley@rileyandco.com', 'd.burns@rileyandco.com', 'g.velez@rileyandco.com'],
-                from: 'noReply@rileyandco.com',
-                bcc: 'joseiq91@gmail.com',
-                subject: 'Lift Station Design Form',
-                html: data,
-              };
-            sgMail.send(msg, function(err, json) {
-                if(err) {
-                    throw err;
-                }
-                let result = {"resultCode": 0, "responseDesc": "Email has successfully sent. Thank you for your business."};
-                res.json(result);
-                //console.log(json);
+            let uploadFile = req.files.file;
+            msg.attachments[0].content = Buffer.from(uploadFile.data).toString("base64");
+            msg.attachments[0].filename = uploadFile.name;
+            let data = jade.renderFile(process.cwd() + '/views/design.jade', myObj)
+            msg.html = data;
+            sendEmail(msg)
+            .then(json => {
+            //success
+            let result = {"resultCode": 0, "responseDesc": "Email has successfully sent. Thank you for your business."};
+            res.json(result);
+            })
+            .catch(err => {
+            //error
+            res.json({ code: err.code, message: err.message });
+            //console.log(err);
             });
+            // const msg = {
+            //     to: ['l.riley@rileyandco.com', 'd.burns@rileyandco.com', 'g.velez@rileyandco.com'],
+            //     from: 'noReply@rileyandco.com',
+            //     bcc: 'joseiq91@gmail.com',
+            //     subject: 'Lift Station Design Form',
+            //     html: data,
+            //   };
+            // sgMail.send(msg, function(err, json) {
+            //     if(err) {
+            //         throw err;
+            //     }
+            //     let result = {"resultCode": 0, "responseDesc": "Email has successfully sent. Thank you for your business."};
+            //     res.json(result);
+            //     //console.log(json);
+            // });
         }
         else {
             //req coming from contact page
             //var resObj = SendEmail(myObj, "/views/index.pug");
-            var data = jade.renderFile(process.cwd() + '/views/customer.jade', myObj)
-            const msg = {
-                to: ['l.riley@rileyandco.com', 'd.burns@rileyandco.com', 'g.velez@rileyandco.com'],
-                from: 'noReply@rileyandco.com',
-                bcc: 'joseiq91@gmail.com',
-                subject: 'Customer Form',
-                html: data,
-              };
-            sgMail.send(msg, function(err, json) {
-                if(err) {
-                    throw err;
-                }
-                let result = {"resultCode": 0, "responseDesc": "Email has successfully sent. Thank you for your business."};
-                res.json(result);
-                //console.log(json);
+            let data = jade.renderFile(process.cwd() + '/views/customer.jade', myObj)
+            msg.html = data;
+            sendEmail(msg)
+            .then(json => {
+            //success
+            let result = {"resultCode": 0, "responseDesc": "Email has successfully sent. Thank you for your business."};
+            res.json(result);
+            })
+            .catch(err => {
+            //error
+            res.json({ code: err.code, message: err.message });
+            //console.log(err);
             });
+            // const msg = {
+            //     to: ['l.riley@rileyandco.com', 'd.burns@rileyandco.com', 'g.velez@rileyandco.com'],
+            //     from: 'noReply@rileyandco.com',
+            //     bcc: 'joseiq91@gmail.com',
+            //     subject: 'Customer Form',
+            //     html: data,
+            //   };
+            // sgMail.send(msg, function(err, json) {
+            //     if(err) {
+            //         throw err;
+            //     }
+            //     let result = {"resultCode": 0, "responseDesc": "Email has successfully sent. Thank you for your business."};
+            //     res.json(result);
+            //     //console.log(json);
+            // });
         }
     }
     }, 2000);
