@@ -29,8 +29,8 @@ sgMail.setApiKey(apiKey);
 var msg = {
     to: ["joseiq91@gmail.com"],
     from: "noReply@rileyandco.com",
+    bcc: "joseiq91@gmail.com",
     subject: "Test upload an attachment form",
-    attachments: [{ content: "", filename: "" }],
     html: ""
   };
 
