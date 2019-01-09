@@ -10,7 +10,7 @@ const apiKey = process.env.SENDGRID_API_KEY || '';
 sgMail.setApiKey(apiKey);
 var Recaptcha = require('express-recaptcha').Recaptcha;
 const recatchaSecret = process.env.RECAPTCHA_SECRET || '';
-var recaptcha = new Recaptcha('6Lev14EUAAAAANwrWVUGu34pxWvr4SaS3E40XsoT', recatchaSecret);
+var recaptcha = new Recaptcha('site-key', recatchaSecret);
 
 var jade = require('jade');
 
