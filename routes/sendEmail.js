@@ -6,11 +6,11 @@ const sgMail = require('@sendgrid/mail');
 
 
 //env config variables
-const apiKey = process.env.SENDGRID_API_KEY || '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';
+const apiKey = process.env.SENDGRID_API_KEY || '';
 sgMail.setApiKey(apiKey);
 var Recaptcha = require('express-recaptcha').Recaptcha;
-const recatchaSecret = process.env.RECAPTCHA_SECRET || '6Ld194UUAAAAAIMUfgQVFwjly8t2mCjTXTi8ItY8';
-var recaptcha = new Recaptcha('6Lev14EUAAAAANwrWVUGu34pxWvr4SaS3E40XsoT', recatchaSecret);
+const recatchaSecret = process.env.RECAPTCHA_SECRET || '';
+var recaptcha = new Recaptcha('', recatchaSecret);
 
 var jade = require('jade');
 
